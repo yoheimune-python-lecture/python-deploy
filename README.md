@@ -17,38 +17,28 @@ docker compose up
 http://localhost:8889/cgi-sample.py
 ```
 
-## WSGIのサンプル
-下記より起動できます（これはDockerコンテナ内ではなく、個々人のPC上で実行します）.  
+## Gunicornのサンプル.
+上記でコンテナを起動後、下記でアクセスできます。
+```text
+http://localhost:8000/
+```
+
+## Apache -> Gunicornのサンプル.
+上記でコンテナを起動後、下記でアクセスできます。
+```text
+http://localhost:8889/gunicorn
+```
+
+## WSGIのサンプル（@ローカル環境）
+下記より起動できます.  
 Pythonは3系であることを想定します.
 ```shell
-cd server
+cd web
 python wsgi-sample.py
 ```
 以下よりアクセスできます。
 ```text
 http://0.0.0.0:8880
-```
-
-## Flaskアプリケーション（サンプルアプリ）の起動
-下記より起動できます（これはDockerコンテナ内ではなく、個々人のPC上で実行します）.  
-Pythonは3系であることを想定します.
-```shell
-cd server/app-flask
-pip install -r requirements.txt
-python myapp.py
-```
-以下よりアクセスできます。
-```text
-http://0.0.0.0:5001
-```
-
-## gunicornによるFlask起動
-下記より起動できます（これはDockerコンテナ内ではなく、個々人のPC上で実行します）.  
-Pythonは3系であることを想定します.
-```shell
-cd server/app-flask
-pip install -r requirements.txt
-gunicorn app:app
 ```
 
 ## FYI

@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+
+  # Pythonとサーバーを連携するサンプルです
+  web:
+    build: ./web
+    ports:
+      - "8889:80"
+    volumes:
+      - "$PWD/web:/var/www/html"
+    command: /usr/sbin/httpd -D FOREGROUND
+    links:
+      - gunicorn
+
+  # gunicornサーバーを動かすサンプルです.
+  gunicorn:
+    build: ./gunicorn
+    ports:
+      - "8000:8000"
+    volumes:
+      - "$PWD/gunicorn:/app"
+    command: /bin/bash -c "
+        cd /app
+        && /usr/local/bin/gunicorn -w 4 -b 0.0.0.0:8000 --reload myapp:app
+      "
+
