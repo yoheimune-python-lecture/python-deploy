@@ -61,34 +61,7 @@ http://3.112.196.57/00/
 
 ## FYI
 以下参考までに。  
-gunicornの永続化や、今回利用しているEC2のセットアップ内容を記載しています.
-
-### gunicornの永続化（systemdの利用）
-systemd などを用いて、gunicornの起動を永続化することができます.
-```shell
-# vim gunicorn-00.service
-[Unit]
-Description=gunicorni-00 daemon
-After=network.target
-
-[Service]
-User=ec2-user
-Group=ec2-user
-WorkingDirectory=/var/www/html/00/hand-written-digit-recognition/practice
-ExecStart=/usr/local/bin/gunicorn -w 1 -b 0.0.0.0:8000 --reload app:app
-RemainAfterExit=yes
-
-[Install]
-WantedBy=multi-user.target
-```
-上記の設定を追加後、sysetmdでの起動や自動起動設定を行うことができます.
-```shell
-systemctl start gunicorn-00
-systemctl enable gunicorn-00
-```
-
-#### 参考
-* https://qiita.com/kimisyo/items/0f108b660c556df164d9
+今回利用しているEC2のセットアップ内容や、gunicornの永続化を記載しています.
 
 ### 初期セットアップ
 ```shell
@@ -140,3 +113,29 @@ do
 done
 chown -R ec2-user:ec2-user /var/www/html
 ```
+
+
+### gunicornの永続化（systemdの利用）
+systemd などを用いて、gunicornの起動を永続化することができます.
+```shell
+# vim gunicorn-00.service
+[Unit]
+Description=gunicorni-00 daemon
+After=network.target
+
+[Service]
+User=ec2-user
+Group=ec2-user
+WorkingDirectory=/var/www/html/00/hand-written-digit-recognition/practice
+ExecStart=/usr/local/bin/gunicorn -w 1 -b 0.0.0.0:8000 --reload app:app
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+```
+上記の設定を追加後、sysetmdでの起動や自動起動設定を行うことができます.
+```shell
+systemctl start gunicorn-00
+systemctl enable gunicorn-00
+```
+
